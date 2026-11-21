@@ -1,0 +1,52 @@
+{
+  "harness_controls": [
+    "validate_input",
+    "blind",
+    "refuse",
+    "log",
+    "escalate"
+  ],
+  "format_problems": [],
+  "entries": [
+    {
+      "control": "validate_input",
+      "principle": "Safety and Security",
+      "principle_source": "UNESCO Recommendation on the Ethics of Artificial Intelligence (2021), para. 42, Safety and Security; https://www.unesco.org/en/legal-affairs/recommendation-ethics-artificial-intelligence",
+      "instrument": "Law of the Republic of Kazakhstan No. 230-VIII of 17 November 2025, On Artificial Intelligence; https://adilet.zan.kz/eng/docs/Z2500000230",
+      "provision": "Article 18 - AI system safety and risk prevention. Used as a Kazakhstan legal benchmark for this synthetic prototype.",
+      "why_here": "Input validation prevents impossible applicant values from producing unreliable scholarship decisions."
+    },
+    {
+      "control": "blind",
+      "principle": "Fairness and Non-Discrimination",
+      "principle_source": "UNESCO Recommendation on the Ethics of Artificial Intelligence (2021), paras. 28-29, Fairness and Non-Discrimination; https://www.unesco.org/en/legal-affairs/recommendation-ethics-artificial-intelligence",
+      "instrument": "Law of the Republic of Kazakhstan No. 230-VIII of 17 November 2025, On Artificial Intelligence; https://adilet.zan.kz/eng/docs/Z2500000230",
+      "provision": "Article 6 - Fairness and equality, including non-discrimination based on sex, nationality and language. Used as a legal benchmark.",
+      "why_here": "Part 1 found 2/40 name-language flips and 4/40 gender-coded-name flips, but neither clearly exceeded the null-name floor; hiding names and universities prevents direct use of these irrelevant fields."
+    },
+    {
+      "control": "refuse",
+      "principle": "Proportionality and Do No Harm",
+      "principle_source": "UNESCO Recommendation on the Ethics of Artificial Intelligence (2021), paras. 25-26, Proportionality and Do No Harm; https://www.unesco.org/en/legal-affairs/recommendation-ethics-artificial-intelligence",
+      "instrument": "Law of the Republic of Kazakhstan No. 94-V of 21 May 2013, On Personal Data and Their Protection; https://adilet.zan.kz/eng/docs/Z1300000094",
+      "provision": "Article 7 - Conditions for collection and processing of personal data, including consent requirements and statutory exceptions. Legal benchmark.",
+      "why_here": "The bare agent processed all six test requests, including unauthorized and invalid ones; the harness refused four, although the prompt-injection case was not detected."
+    },
+    {
+      "control": "log",
+      "principle": "Transparency and Explainability",
+      "principle_source": "UNESCO Recommendation on the Ethics of Artificial Intelligence (2021), paras. 37-40, Transparency and Explainability; https://www.unesco.org/en/legal-affairs/recommendation-ethics-artificial-intelligence",
+      "instrument": "Law of the Republic of Kazakhstan No. 94-V of 21 May 2013, On Personal Data and Their Protection; https://adilet.zan.kz/eng/docs/Z1300000094",
+      "provision": "Articles 11 and 22 - Confidentiality and protection of personal data. The audit log is a design measure, not a logging requirement directly established by these articles.",
+      "why_here": "The harness changed 122/400 outcomes, so a structured decision log is necessary to investigate decisions, control actions and possible errors afterward."
+    },
+    {
+      "control": "escalate",
+      "principle": "Human Oversight and Determination",
+      "principle_source": "UNESCO Recommendation on the Ethics of Artificial Intelligence (2021), paras. 35-36, Human Oversight and Determination; https://www.unesco.org/en/legal-affairs/recommendation-ethics-artificial-intelligence",
+      "instrument": "Law of the Republic of Kazakhstan No. 230-VIII of 17 November 2025, On Artificial Intelligence; https://adilet.zan.kz/eng/docs/Z2500000230",
+      "provision": "Article 6 - Human well-being and fairness principles. Human review is a design safeguard supporting these principles, not an automatic legal obligation for every borderline score.",
+      "why_here": "The harness escalated 114/400 applications (28.5%) for human review, reducing reliance on automatic decisions while increasing reviewer workload."
+    }
+  ]
+}
