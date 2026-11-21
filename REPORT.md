@@ -1,66 +1,35 @@
 # REPORT — what the measurement showed, who it affects, and whose responsibility it is
-<!-- STUDENT: replace -->
-
-Replace this whole template with your own text. Delete the line above (the `STUDENT: replace`
-marker) once you have, and delete these instructions and the guiding questions too. Keep the three
-numbered headings. Every number you quote must be one **your own notebook printed**, copied exactly,
-with the group it refers to (which attribute, how many pairs). Which dimension each section is
-graded against is in the README.
-
-The guiding questions are prompts, not a form: you do not have to answer each one in turn, and
-answering them without evidence from your run earns nothing.
 
 ## 1. Measurement read-out
 
-(Dimension: Evidence of Specific Impact.)
+The experiment used 200 matched pairs: 40 for each of name language, gender-coded name, university, null name, and null university. The bare agent processed 400 profiles, shortlisted 356, rejected 44, and produced 0 unparseable replies. Every pair shared exactly the same merit fields; only the attribute being tested changed.
 
-Guiding questions:
+The name-language comparison produced 2 decision flips in 40 pairs (5.0%, 95% Wilson confidence interval [1.4%, 16.5%]). Scores differed in 11 of 40 pairs, with a mean absolute difference of 3.12 points (95% bootstrap confidence interval [1.38, 5.25]). Its comparison floor, null name, had 0 flips in 40 pairs (0%, [0%, 8.8%]) and a mean absolute score difference of 2.00 points ([0.62, 3.62]).
 
-- For each attribute (name language, gender-coded name, university): how many pairs, how many
-  flips, in which direction, and what was the typical score shift? Are these counts and magnitudes,
-  or a description of them?
-- Which attribute moved the decision, and by how much, **read against its own floor**? If a real
-  attribute's divergence is no larger than its floor's, what does that allow you to say, and
-  what does it not?
-- How much of the divergence could be noise? What do the two floors (`null_name` for the name
-  attributes, `null_university` for the university) test, and what do they leave untested (think about
-  what they change and what they keep fixed)? What would a stronger estimate require?
-- If nothing stands clear of its floor: what exactly can you say (counts, intervals), what could your
-  number of pairs have detected and not detected, and why is "no measured effect" not "no effect"?
-- Would the same attribute behave the same way with a different prompt wording, a different
-  model, or real applicants? Say what your run can and cannot support.
+The gender-coded-name comparison produced 4 decision flips in 40 pairs (10.0%, 95% confidence interval [4.0%, 23.1%]). Scores differed in 6 of 40 pairs, with a mean absolute difference of 1.12 points ([0.25, 2.13]). Its null-name floor was 0 flips in 40 pairs (0%, [0%, 8.8%]), with a mean absolute score difference of 2.00 points ([0.62, 3.62]).
+
+The university comparison produced 1 decision flip in 40 pairs (2.5%, 95% confidence interval [0.4%, 12.9%]). Scores differed in 10 of 40 pairs, with a mean absolute difference of 2.50 points ([1.12, 4.12]). Its null-university floor also had 1 flip in 40 pairs (2.5%, [0.4%, 12.9%]); scores differed in 9 of 40 null-university pairs, with a mean absolute difference of 2.12 points ([0.88, 3.62]).
+
+For completeness, the null-name floor had different scores in 7 of 40 pairs, with a mean absolute difference of 2.00 points ([0.62, 3.62]). Neither null comparison establishes a protected-attribute effect; these are baseline measures of sensitivity to irrelevant changes.
+
+**No tested attribute showed decision divergence clearly distinguishable from its own floor.** All relevant 95% flip-rate intervals overlapped their corresponding floor; the absolute-score intervals also overlapped. The two floors measure sensitivity to changing a name within one language/gender group or changing a university within the same tier. They do not capture all sources of prompt sensitivity. The agent used greedy decoding, so this is not stochastic run-to-run variation, but irrelevant input changes can still alter its responses.
+
+Direction matters. For name-language comparisons, Kazakh-language names were favoured in 2 discordant comparisons and the other side in 0 (McNemar p=0.500); Russian-language names were favoured in 0 versus 1 (p=1.000); English-language names were favoured in 0 versus 1 (p=1.000). The subgroup shortlist rates were Kazakh 96.4% (n=28), English 96.2% (n=26), and Russian 92.3% (n=26). For gender-coded names, female-coded names were shortlisted in 90.0% and male-coded names in 80.0% of the 40 profiles per group: four discordant pairs favoured female-coded names and none favoured male-coded names (McNemar p=0.125). Mean male-minus-female score gap was -0.4 [-1.2, +0.6]. For universities, flagship profiles were shortlisted in 92.5% versus 90.0% for regional profiles; the sole discordant pair favoured flagship (p=1.000). The flagship-minus-regional mean score gap was +2.5 [1.1, 4.1], sign-test p=0.002. That directional *score* association is worth investigating but does not establish a decision-flip effect beyond its null-university floor.
+
+With only 40 pairs, an exact two-sided McNemar test at the 0.05 level needs at least six one-directional discordant pairs (15%) when there are no opposite-direction discordances, eight (20%) with one opposite discordance, or ten (25%) with two. Thus smaller effects may remain undetected, and a non-significant result is not evidence of zero bias. Multiple comparisons also call for care. Results for these fictional profiles, one prompt version, and one model should not automatically be extended to real applicants, another prompt or another model.
+
+With the harness enabled and both name and university hidden, all five categories had 0/40 flips (0% [0%, 8.8%]) and 0/40 score-different pairs. This is **zero by construction**: paired prompts are identical after those fields are withheld. It does not demonstrate a change in the underlying model's fairness. The substantive profile-level changes were 122/400 outcome changes: 88 shortlist-to-escalate, 26 reject-to-escalate, 7 shortlist-to-reject, and 1 reject-to-shortlist. Scores changed for 166/400 profiles, with mean absolute change 14.01 points among changed scores. Removing fields changes the prompt structure as well as the content, so these changes cannot be attributed solely to bias in the removed attributes.
 
 ## 2. Who is affected
 
-(Dimension: Affected Parties and the Consequences They Bear.)
+The observed subgroup disparities point to people who would bear the cost if an automated screening inconsistency became a wrongful final decision. In the bare gender-coded comparison, male-coded names received a shortlist in 80.0% rather than 90.0% for female-coded names (4 discordant pairs; 10 percentage points), although that difference is not statistically established beyond the null-name floor. Regional university profiles were shortlisted in 90.0% rather than 92.5% for flagship profiles (one discordant pair, equal to the null-university floor), while Russian-language-name profiles had 92.3% shortlisted compared with 96.4% for Kazakh-language-name profiles and 96.2% for English-language-name profiles. These are descriptive rates from small synthetic samples, **not** demonstrated discrimination.
 
-Guiding questions:
-
-- On each side of a **wrong** decision, who is it? Who is wrongly rejected, and who is wrongly
-  shortlisted (and therefore who is displaced from a limited number of places)? Tie each group
-  to a divergence you measured, not to a general statement that "some groups may be harmed".
-- What does each wrong decision cost the person it falls on (money, a place, time, a record
-  that follows them)? Is the cost the same for a wrongly rejected applicant and a wrongly shortlisted one?
-- Which parties does the brief not mention, but that are affected anyway (people who never
-  applied because they expected to be rejected; the staff who review escalated cases; the fund;
-  applicants from institutions the model has never seen)?
-- If you measured no divergence beyond the floors: who would bear the cost if there were one that your
-  sample could not detect? Tie that to what your number of pairs could and could not see.
-- Which consequences compound when the agent is used year after year, or when its output is
-  used as an input to the next stage (a later review, another fund, a published ranking)?
+A wrongly rejected applicant could lose access to scholarship funding, a place in a limited shortlist, time to seek other support and confidence in the process. A wrongly shortlisted applicant may receive an opportunity that should have gone to another applicant; the displaced person bears a less visible cost. An escalation is different from a final rejection: it creates delay and possible uncertainty, and makes reviewers responsible for consistent adjudication. The harness sent 114/400 measured applications (28.5%) to people; including six later test cases the log records 116 escalations among 406 requests. The fund bears staffing and appeal costs, and applicants from previously unseen institutions or those discouraged from applying may be affected even though this synthetic experiment cannot measure them. Repeated screening could compound disparities or propagate misleading scores into later-stage decisions.
 
 ## 3. Professional responsibility
 
-(Dimension: Recognition of Professional Responsibility.)
+My responsibility as the developer is to validate inputs before model invocation, test the refusal boundary, remove unnecessary identifiers, preserve an auditable decision record, make escalation behaviour explicit, quantify false refusals, and report uncertainty to the scholarship fund. I must **not** claim that this experiment proves fairness or that hiding two fields fixes all potential bias. The bare test did not establish an effect beyond the floors, and blinding creates identical paired prompts rather than retraining the model.
 
-Guiding questions:
+The submitted harness enables validation, blinding of name and university, refusal rules, structured logging and escalation. In the measured harness run there were 400 model calls (the same as the bare run), 114/400 escalations (28.5%) and zero refusals. The escalation band of 40–60 contained 193/400 baseline scores (48.2%), so the actual 28.5% human-review share shows that calibration did not transfer to the blinded configuration. It must be recalibrated on the new score distribution before deployment. Prompt tokens decreased from 84,409 to 77,922; runtime was 493.7 versus 488.0 seconds. These timings are measurements, not promised performance gains.
 
-- Given what you measured, what are **your** specific responsibilities as the developer of the
-  harness: what must you check before it runs, what must you tell the people who deploy it, what
-  must you not claim about it?
-- What would discharging each of those responsibilities require in practice (a test, a
-  documented limit, a stop condition)? What have you actually done in this lab, and what is left?
-- Which responsibilities belong to the **institution** that deploys the system (setting the
-  purpose, choosing who reviews, handling appeals) rather than to you?
-- Where do the two conflict? For example, what happens if the institution wants a control removed
-  because it slows the process or costs money, and you have measured what that control prevents?
+Part 4 exposed a remaining security defect: of six test requests the harness refused four (wrong purpose, minor, missing consent, invalid values) but did not refuse the prompt injection in a name; it escalated that case as borderline after one model call. Zero of the 400 clean measured applicants would be refused by the current rules. That is not an adequate adversarial test or proof of no false positives. Before any real deployment I would expand multilingual/adversarial tests, test legitimate difficult text, fix and retest the injection rule, design appeals, rerun the notebook and regenerate its log, and set explicit incident stop conditions. The institution, rather than the developer alone, must define eligibility, review staffing and independence, appeal access, data retention and authorization, and final scholarship allocation. I would disclose any control removal proposed to save reviewer time, including its measured risk and workload implications.
